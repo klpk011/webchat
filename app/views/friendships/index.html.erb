@@ -1,4 +1,5 @@
 <div class="row">
+  <h2 class="text-center">联系人列表</h2>
   <%= render 'common/sidebar'%>
   <div class="col col-md-8">
     <table class="table table-border">
@@ -7,7 +8,9 @@
         <th>#</th>
         <th>Name</th>
         <th>Email</th>
-        <th>Option</th>
+        <th>Unread</th>
+        <th>Conversation</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +19,8 @@
         <td>#</td>
         <td><%= friend.username %></td>
         <td><%= friend.email %></td>
+        <td><%= friend.unread(current_user, friend) %></td>
+        <td><%= link_to '聊天页面', conversations_path(:sender_id => current_user.id, :recipient_id => friend.id), method: :post, class: 'btn btn-primary'%></td>
         <td><%= link_to '删除联系人',friendship_path(friend), method: :delete, class: 'btn btn-danger', data: { confirm: "Delete this Friend?"}%></td>
       </tr>
       <% end %>
