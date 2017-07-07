@@ -5,6 +5,14 @@ class MessagesController < ApplicationController
 
   def index
     @messages = @conversation.messages
+    if current_user.unread(current_user,@conversation.sender)
+     @messages.each do |message|
+       if message.user_id != current_user.id
+         message.update(read: 'true')
+       end
+
+     end
+   end
     if @messages.length > 10
       @over_ten = true
       @messages = @messages[-10..-1]
@@ -16,6 +24,7 @@ class MessagesController < ApplicationController
     if @messages.last
       @messages.last.read = true if @messages.last.user_id != current_user.id
     end
+
     @message = @conversation.messages.new
   end
 
