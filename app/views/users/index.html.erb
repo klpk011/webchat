@@ -1,0 +1,31 @@
+<div class="row">
+  <h2 class="text-center">所有用户</h2>
+  <table class="table table-border">
+    <thead>
+      <tr>
+        <th> # </th>
+        <th> UserName </th>
+        <th> Email </th>
+        <th>Option</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+      <tr>
+        <% unless current_user == user %>
+        <td> # </td>
+        <td> <%= user.username %> </td>
+        <td> <%= user.email %> </td>
+        <td>
+          <% if !current_user.friends.include?(user) %>
+          <%= link_to "添加联系人",friendships_path(:friend_id => user ),method: :post, class: "btn btn-primary" %>
+          <% else %>
+          Your friend!
+          <% end %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
